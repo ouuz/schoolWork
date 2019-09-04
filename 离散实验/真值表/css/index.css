@@ -1,0 +1,80 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+
+.container {
+  width: 100vw;
+  height: 100vh;
+  background-image: linear-gradient(15deg, #13547a 0%, #80d0c7 100%);
+  position: relative;
+}
+
+.content {
+  width: 30vw;
+  height: 15vh;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  margin: auto;
+  line-height: 3;
+  text-align: center;
+  border: 1px dashed ;
+}
+#showBtn{
+  font-size: 1em;
+  padding: 0 3em;
+  line-height: 1.5;
+  background: transparent;
+  outline: none;
+  border: 1px solid #ddd;
+  cursor: pointer;
+  margin: 4vh 5vw 0vh 5vw;
+}
+.argument{
+  position: absolute;
+  left: 3vw;
+  bottom: 5vh;
+  margin: auto;
+  width: 80vw;
+}
+.argumentBalls{
+  display: flex;
+  justify-content: space-around;
+ 
+}
+.argumentBall,.connectorSquare{
+  background-image: linear-gradient(15deg, #13547a 0%, #80d0c7 100%);
+  box-shadow: 4px 3px 20px 0px #fff;
+  border-radius: 50%;
+  height: 70px;
+  width: 70px;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5em;
+  cursor: pointer;
+}
+.argumentBall:hover{
+  color: #ffffff;
+  transition: all .5s;
+}
+.connectors{
+  position: absolute;
+  right: 3vw;
+  bottom: 10vh;
+  margin: auto;
+}
+.connectorSquare{
+border-radius: 0;
+height: 30px;
+width: 30px;
+}
+.a{
+  opacity: 0;
+  transition: all 1s ease-in-out;
+  transform: translateX(20px)
+}
