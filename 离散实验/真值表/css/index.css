@@ -21,9 +21,10 @@
   margin: auto;
   line-height: 3;
   text-align: center;
-  border: 1px dashed ;
+  border: 1px dashed;
 }
-#showBtn{
+
+#showBtn {
   font-size: 1em;
   padding: 0 3em;
   line-height: 1.5;
@@ -31,21 +32,25 @@
   outline: none;
   border: 1px solid #ddd;
   cursor: pointer;
-  margin: 4vh 5vw 0vh 5vw;
+  margin: 4vh 0vw 0vh 5.7vw;
 }
-.argument{
+
+.argument {
   position: absolute;
   left: 3vw;
   bottom: 5vh;
   margin: auto;
   width: 80vw;
 }
-.argumentBalls{
+
+.argumentBalls {
   display: flex;
   justify-content: space-around;
- 
+
 }
-.argumentBall,.connectorSquare{
+
+.argumentBall,
+.connectorSquare {
   background-image: linear-gradient(15deg, #13547a 0%, #80d0c7 100%);
   box-shadow: 4px 3px 20px 0px #fff;
   border-radius: 50%;
@@ -58,22 +63,26 @@
   font-size: 1.5em;
   cursor: pointer;
 }
-.argumentBall:hover{
+
+.argumentBall:hover {
   color: #ffffff;
   transition: all .5s;
 }
-.connectors{
+
+.connectors {
   position: absolute;
   right: 3vw;
   bottom: 10vh;
   margin: auto;
 }
-.connectorSquare{
-border-radius: 0;
-height: 30px;
-width: 30px;
+
+.connectorSquare {
+  border-radius: 0;
+  height: 30px;
+  width: 30px;
 }
-.a{
+
+.a {
   opacity: 0;
   transition: all 1s ease-in-out;
   transform: translateX(20px)

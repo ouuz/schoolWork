@@ -1,4 +1,5 @@
 $(function() {
+
   $('.argumentBall').click(function(){
     let move = $(`
       <div  class="argumentBall"
@@ -11,8 +12,37 @@ $(function() {
     `)
     $('.argument').append(move)
     move.draggable();
+  })
+
+
+
+  $('.connectorSquare').click(function(){
+  let move = $(`
+    <div  class="connectorSquare"
+          style="position:absolute;
+          top:${$(this).position().top}px;
+          right:${$(this).position().left}px" 
+    >
+    ${$(this).text()}
+    </div>
+  `)
+  $('.connectors').append(move)
+  move.draggable();
+  })
+
+  function ad(a, b){
+    return $(a).offset().left - $(b).offset().left
+  }
+  $('#shdsBtn').click(function(){
+    let list = [],n = 0,list1 = [],list2 = [];
+    for(let i of $('.ui-draggable')){
+      list[n] = i;
+      n++;
+    }
+    list.sort(ad)
 
   })
+
   $('#showBtn').click(function(){
     if($(this).text() =='收起'){
       $('.a').css('opacity','0').css('transform', 'translateX(20px)')
