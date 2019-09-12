@@ -13,15 +13,9 @@
 .content {
   width: 30vw;
   height: 15vh;
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  margin: auto;
+
   line-height: 3;
   text-align: center;
-  border: 1px dashed;
 }
 
 #showBtn {
@@ -33,6 +27,20 @@
   border: 1px solid #ddd;
   cursor: pointer;
   margin: 4vh 0vw 0vh 5.7vw;
+}
+
+#shdsBtn {
+  font-size: 1em;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  margin: auto;
+  height: 6%;
+  line-height: 2;
+  padding: 0 5%;
+  text-align: center;
 }
 
 .argument {
@@ -86,4 +94,20 @@
   opacity: 0;
   transition: all 1s ease-in-out;
   transform: translateX(20px)
+}
+
+tr,
+td,
+th {
+  box-sizing: border-box;
+  border: 1px solid #000000;
+  text-align: center;
+  line-height: 30px;
+  height: 30px;
+}
+
+table {
+  width: 80%;
+  margin: 0 auto;
+  border: 1px solid #000000;
 }
