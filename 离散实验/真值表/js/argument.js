@@ -1,15 +1,19 @@
-$('#shdsBtn').click(function () {
+$('#goBtn').click(function () {
   let List = [],
       originalArgument = [],
       argumentList = [],
       conditions = [],
       tfList = [],
+      resultList = [],
+      MainDisjunctiveNormalForm,
+      PrincipalConjunctiveNormalForm,
       finalArgument;
 
   getValue()
   argument()
   truthTable()
   mainDisjunctiveNormalForm()
+  principalConjunctiveNormalForm()
 
   function getValue() {
     let list = [...$('.ui-draggable')];
@@ -64,11 +68,6 @@ $('#shdsBtn').click(function () {
     List = List.split('')
   }
 
-  function getLine(x,n){
-    if( n <= 0 ) return 1;
-    return getLine(x, n - 1) * x;
-  }
-
   function createTruthTable() {
     let thTemplateList = [],
       trList = [],
@@ -96,7 +95,7 @@ $('#shdsBtn').click(function () {
 
   function conditionalCombination(){
     List.map(item => {
-      item.match('[P-RC-I]') ? argumentList.push(item) : ''
+      item.match('[A-Z]') ? argumentList.push(item) : ''
     })
 
     argumentList = [...new Set(argumentList)];
@@ -113,7 +112,6 @@ $('#shdsBtn').click(function () {
   }
 
   function fillTruthTable(){
-    let resultList = [];
     $(".TruthFalse").find("td:last-of-type").addClass("result");
 
     $(".TruthFalse").find("td:not(.result)").each((index, cur) => {
@@ -149,7 +147,59 @@ $('#shdsBtn').click(function () {
   }
 
   function mainDisjunctiveNormalForm(){
+    let mainDisjunctiveNormalFormList = [],
+        mainDisjunctiveNormalForm = [];
 
-   
+    $('.result').each((index, cur) => {
+      if(cur.innerText == 'true'){
+        for(let i = 0;i< resultList[index].length; i++){
+          resultList[index][i] == 'T'? 
+          mainDisjunctiveNormalFormList.push(argumentList[i])
+          :
+          mainDisjunctiveNormalFormList.push(`┐${argumentList[i]}`)
+        }
+      }
+    })
+
+    for(let i = 0;i< mainDisjunctiveNormalFormList.length;i + argumentList.length - 1){
+      mainDisjunctiveNormalForm.push(mainDisjunctiveNormalFormList.splice(i, i + argumentList.length - 1))
+    }
+
+    mainDisjunctiveNormalForm.map(item =>{
+      item[0] = `(${item[0]}`
+      item[item.length-1] = `${item[item.length-1]})∨`
+    })
+    MainDisjunctiveNormalForm = mainDisjunctiveNormalForm.join('').replace(/,/g,'∧')
+    MainDisjunctiveNormalForm = MainDisjunctiveNormalForm.substring(0,MainDisjunctiveNormalForm.length - 1)
+    console.log(MainDisjunctiveNormalForm)
   }
+
+  function principalConjunctiveNormalForm(){
+    let principalConjunctiveNormalFormList = [],
+        principalConjunctiveNormalForm = [];
+
+    $('.result').each((index, cur) => {
+      if(cur.innerText == 'false'){
+        for(let i = 0;i< resultList[index].length; i++){
+          resultList[index][i] == 'F'? 
+          principalConjunctiveNormalFormList.push(argumentList[i])
+          :
+          principalConjunctiveNormalFormList.push(`┐${argumentList[i]}`)
+        }
+      }
+    })
+
+    for(let i = 0;i< principalConjunctiveNormalFormList.length;i + argumentList.length - 1){
+      principalConjunctiveNormalForm.push(principalConjunctiveNormalFormList.splice(i, i + argumentList.length - 1))
+    }
+
+    principalConjunctiveNormalForm.map(item =>{
+      item[0] = `(${item[0]}`
+      item[item.length-1] = `${item[item.length-1]})∧`
+    })
+    PrincipalConjunctiveNormalForm = principalConjunctiveNormalForm.join('').replace(/,/g,'∨')
+    PrincipalConjunctiveNormalForm = PrincipalConjunctiveNormalForm.substring(0,PrincipalConjunctiveNormalForm.length - 1)
+    console.log(PrincipalConjunctiveNormalForm)
+  }
+
 })

@@ -8,35 +8,46 @@
   <title>利用真值表法求取主析取范式以及主合取范式的实现</title>
   <link rel="stylesheet" href="./css/index.css">
   <link rel="stylesheet" href="./css/jquery-ui.css">
+  <link rel="stylesheet" href="./css/iconfont.css">
 </head>
 
 <body>
+  <canvas id="canvas"></canvas>
   <div class="container">
-      <button id="shdsBtn">GO</button>
+    <div class="goBtn">
+      <img src="./img/Go.png" id ="goBtn"alt="GO">
+    </div>
     <div class="argument">
       <div class="argumentBalls">
         <div class="argumentBall">P</div>
         <div class="argumentBall">Q</div>
         <div class="argumentBall a">R</div>
+        <div class="argumentBall a">A</div>
+        <div class="argumentBall a">B</div>
         <div class="argumentBall a">C</div>
         <div class="argumentBall a">D</div>
+        <div class="argumentBall a">E</div>
         <div class="argumentBall a">F</div>
         <div class="argumentBall a">G</div>
         <div class="argumentBall a">H</div>
         <div class="argumentBall a">I</div>
+        <div class="argumentBall a">J</div>
+        <div class="argumentBall a">K</div>
+        <div class="argumentBall a">L</div>
       </div>
-      <button id="showBtn">展开</button>
+      <button id="showABtn">展开</button>
     </div>
     <div class="connectors">
-      <div class="connectorSquare">∧</div>
-      <div class="connectorSquare">┐</div>
-      <div class="connectorSquare">→</div>
-      <div class="connectorSquare">
+      <div class="connectorSquare b">┐</div>
+      <div class="connectorSquare b">→</div>
+      <div class="connectorSquare b">
         <=>
       </div>
-      <div class="connectorSquare">∨</div>
-      <div class="connectorSquare">(</div>
-      <div class="connectorSquare">)</div>
+      <div class="connectorSquare b">∨</div>
+      <div class="connectorSquare b">(</div>
+      <div class="connectorSquare b">)</div>
+      <div class="connectorSquare">∧</div>
+      <button id="showBBtn">展开</button>
     </div>
     <div class="truthTable">
     </div>
@@ -44,6 +55,7 @@
 </body>
 <script src="./js/jquery-3.4.1.min.js"></script>
 <script src="./js/jquery-ui.js"></script>
+<script src="./js/waves.js"></script>
 <script src="./js/index.js"></script>
 <script src="./js/argument.js"></script>
 

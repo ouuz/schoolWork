@@ -6,19 +6,20 @@
 .container {
   width: 100vw;
   height: 100vh;
-  background-image: linear-gradient(15deg, #13547a 0%, #80d0c7 100%);
+  /* background-image: linear-gradient(15deg, #13547a 0%, #80d0c7 100%); */
   position: relative;
+  z-index: 1;
 }
 
 .content {
   width: 30vw;
   height: 15vh;
-
   line-height: 3;
   text-align: center;
 }
 
-#showBtn {
+#showABtn,
+#showBBtn {
   font-size: 1em;
   padding: 0 3em;
   line-height: 1.5;
@@ -26,21 +27,25 @@
   outline: none;
   border: 1px solid #ddd;
   cursor: pointer;
-  margin: 4vh 0vw 0vh 5.7vw;
+  margin: 3vh 0vw 0vh 2.7vw;
 }
-
-#shdsBtn {
-  font-size: 1em;
+#showBBtn{
+  margin-left: 0vw;
+}
+.goBtn {
   position: absolute;
   top: 0;
   left: 0;
   right: 0;
   bottom: 0;
   margin: auto;
-  height: 6%;
+  height: 5vw;
   line-height: 2;
-  padding: 0 5%;
   text-align: center;
+  width: 5vw;
+}
+.goBtn img{
+  height: 100%;
 }
 
 .argument {
@@ -48,7 +53,7 @@
   left: 3vw;
   bottom: 5vh;
   margin: auto;
-  width: 80vw;
+  width: 90vw;
 }
 
 .argumentBalls {
@@ -59,7 +64,7 @@
 
 .argumentBall,
 .connectorSquare {
-  background-image: linear-gradient(15deg, #13547a 0%, #80d0c7 100%);
+  background-image: linear-gradient(15deg, #5e9b8f 0%, #ffffff 100%);
   box-shadow: 4px 3px 20px 0px #fff;
   border-radius: 50%;
   height: 70px;
@@ -79,18 +84,19 @@
 
 .connectors {
   position: absolute;
-  right: 3vw;
-  bottom: 10vh;
-  margin: auto;
+  right: 1vw;
+  bottom: 5vh;
 }
 
 .connectorSquare {
   border-radius: 0;
-  height: 30px;
-  width: 30px;
+  height: 50px;
+  width: 50px;
+  margin-top: 40px;
+  margin-left: 40px;
 }
 
-.a {
+.a,.b{
   opacity: 0;
   transition: all 1s ease-in-out;
   transform: translateX(20px)
@@ -110,4 +116,17 @@ table {
   width: 80%;
   margin: 0 auto;
   border: 1px solid #000000;
+}
+
+canvas{
+  position: absolute;
+  z-index: -9999;
+}
+html,
+body {
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    touch-action: none;
+    cursor: none;
 }
