@@ -1,5 +1,5 @@
 $(function () {
-  if ($('.argumentBall').css('opacity') === '1') {
+  if ($('.argumentBall').css('opacity') === 1) {
     $('.argumentBall').click(function () {
       let move = $(`
         <div  class="argumentBall"
@@ -16,20 +16,22 @@ $(function () {
     })
   }
   
+  if ($('.connectorSquare').css('opacity') === 1){
     $('.connectorSquare').click(function () {
       let move = $(`
-    <div  class="connectorSquare"
-          style="position:absolute;
-          top:${$(this).position().top}px;
-          right:${$(this).position().left20}px;
-          color:#ffffff" 
-    >
-    ${$(this).text()}
-    </div>
-    `)
+        <div  class="connectorSquare"
+              style="position:absolute;
+              top:${$(this).position().top}px;
+              right:${$(this).position().left20}px;
+              color:#ffffff" 
+        >
+          ${$(this).text()}
+        </div>
+      `)
       $('.connectors').append(move)
       move.draggable();
     })
+  }
 
   $('#showABtn').click(function () {
     if ($(this).text() == '收起') {
@@ -66,5 +68,8 @@ $(function () {
       $('.Tips').css('transform','translateY(60vh)').css('animation','shake 1s 0')
     
   })
+
+  $(document).bind("selectstart",function(){return false;});
+  $(document).bind("contextmenu",function(){return false;});
 
 });
