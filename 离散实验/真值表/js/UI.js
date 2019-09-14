@@ -1,5 +1,5 @@
 $(function () {
-  if($('.argumentBall').css('opacity') === '1'){
+  if ($('.argumentBall').css('opacity') === '1') {
     $('.argumentBall').click(function () {
       let move = $(`
         <div  class="argumentBall"
@@ -15,25 +15,21 @@ $(function () {
       move.draggable();
     })
   }
-
-  if($('.connectorSquare').css('opacity') === '1'){
+  
     $('.connectorSquare').click(function () {
       let move = $(`
-      <div  class="connectorSquare"
-            style="position:absolute;
-            top:${$(this).position().top}px;
-            right:${$(this).position().left}px" 
-      >
-      ${$(this).text()}
-      </div>
+    <div  class="connectorSquare"
+          style="position:absolute;
+          top:${$(this).position().top}px;
+          right:${$(this).position().left20}px;
+          color:#ffffff" 
+    >
+    ${$(this).text()}
+    </div>
     `)
       $('.connectors').append(move)
       move.draggable();
     })
-  }
-
-
-
 
   $('#showABtn').click(function () {
     if ($(this).text() == '收起') {
@@ -44,6 +40,7 @@ $(function () {
       $(this).text('收起')
     }
   })
+
   $('#showBBtn').click(function () {
     if ($(this).text() == '收起') {
       $('.b').css('opacity', '0').css('transform', 'translateX(20px)')
@@ -52,6 +49,22 @@ $(function () {
       $('.b').css('opacity', '1').css('transform', 'translateX(0)')
       $(this).text('收起')
     }
+  })
+
+  $('#back').click(function () {
+    $('.container').css('transform', 'translateY(0)')
+    $('.truthTableBox').css('transform', 'translateY(0)')
+    setTimeout(() => {
+      window.location.reload()
+    }, 500)
+  })
+
+  $('.Tips').click(function(){
+    $('.Tips').offset().top > -200 ?
+      $('.Tips').css('transform','translateY(0)').css('animation','shake 1s infinite')
+      :
+      $('.Tips').css('transform','translateY(60vh)').css('animation','shake 1s 0')
+    
   })
 
 });

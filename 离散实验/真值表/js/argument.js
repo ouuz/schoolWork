@@ -1,19 +1,45 @@
 $('#goBtn').click(function () {
   let List = [],
-      originalArgument = [],
-      argumentList = [],
-      conditions = [],
-      tfList = [],
-      resultList = [],
-      MainDisjunctiveNormalForm,
-      PrincipalConjunctiveNormalForm,
-      finalArgument;
+    originalArgument = [],
+    argumentList = [],
+    conditions = [],
+    tfList = [],
+    resultList = [],
+    MainDisjunctiveNormalForm,
+    PrincipalConjunctiveNormalForm,
+    finalArgument;
 
   getValue()
   argument()
-  truthTable()
-  mainDisjunctiveNormalForm()
-  principalConjunctiveNormalForm()
+  isError()
+  
+  function isError() {
+    if ((finalArgument.indexOf('∧') || finalArgument.indexOf('→') || finalArgument.indexOf('<=>') || finalArgument.indexOf('∨')) !== -1) {
+      truthTable()
+      mainDisjunctiveNormalForm()
+      principalConjunctiveNormalForm()
+    } else {
+      console.log("error")
+      $('body').append(`
+      <div class ="error">
+        <p>检查一下表达式是不是写错了噢~！</p>
+        <button id="close">好的好的，我马上乖乖写好（</button>
+      </div>
+      `)
+      $('.error').css('opacity','0')
+      setTimeout(()=>{
+        $('.error').css('opacity','1')
+      },300)
+    }
+
+    $('#close').click(function () {
+      $('.error').css('opacity','0')
+      setTimeout(()=>{
+        $('.error').remove()
+      },300)
+      
+    })
+  }
 
   function getValue() {
     let list = [...$('.ui-draggable')];
@@ -78,22 +104,19 @@ $('#goBtn').click(function () {
       tdList.push(`<td></td>`)
     })
 
-
-    for(let i = 0; i <= parseInt(tfList,2); i++)
-    {
-      trList.push(`<tr class="TruthFalse">${tdList}</tr>`)
+    for (let i = 0; i <= parseInt(tfList, 2); i++) {
+      trList.push(`<tr class="TruthFalse">${tdList.join('')}</tr>`)
     }
-
 
     $('.truthTable').append(`
       <table border="1">
-        <tr>${thTemplateList}</tr>
-          ${trList}
+        <tr>${thTemplateList.join('')}</tr>
+          ${trList.join('')}
       </table>
     `)
   }
 
-  function conditionalCombination(){
+  function conditionalCombination() {
     List.map(item => {
       item.match('[A-Z]') ? argumentList.push(item) : ''
     })
@@ -111,7 +134,7 @@ $('#goBtn').click(function () {
     conditions = conditions.join('').replace(/0/g, 'F').replace(/1/g, 'T').split('')
   }
 
-  function fillTruthTable(){
+  function fillTruthTable() {
     $(".TruthFalse").find("td:last-of-type").addClass("result");
 
     $(".TruthFalse").find("td:not(.result)").each((index, cur) => {
@@ -139,67 +162,72 @@ $('#goBtn').click(function () {
     })
     $(".truthTable table").find("th:last-of-type")[0].innerText = finalArgument
   }
-  
-  function truthTable() { 
+
+  function truthTable() {
     conditionalCombination()
     createTruthTable()
     fillTruthTable()
+    $('.container').css('transform','translateY(100vh)')
+    $('.truthTableBox').css('transform','translateY(-98vh)')
+
+    if($('.truthTable').height() >'550')
+      $('.truthTable').css('overflowY','scroll').css('overflowX','hidden')
   }
 
-  function mainDisjunctiveNormalForm(){
+  function mainDisjunctiveNormalForm() {
     let mainDisjunctiveNormalFormList = [],
-        mainDisjunctiveNormalForm = [];
+      mainDisjunctiveNormalForm = [];
 
     $('.result').each((index, cur) => {
-      if(cur.innerText == 'true'){
-        for(let i = 0;i< resultList[index].length; i++){
-          resultList[index][i] == 'T'? 
-          mainDisjunctiveNormalFormList.push(argumentList[i])
-          :
-          mainDisjunctiveNormalFormList.push(`┐${argumentList[i]}`)
+      if (cur.innerText == 'true') {
+        for (let i = 0; i < resultList[index].length; i++) {
+          resultList[index][i] == 'T' ?
+            mainDisjunctiveNormalFormList.push(argumentList[i]) :
+            mainDisjunctiveNormalFormList.push(`┐${argumentList[i]}`)
         }
       }
     })
 
-    for(let i = 0;i< mainDisjunctiveNormalFormList.length;i + argumentList.length - 1){
+    for (let i = 0; i < mainDisjunctiveNormalFormList.length; i + argumentList.length - 1) {
       mainDisjunctiveNormalForm.push(mainDisjunctiveNormalFormList.splice(i, i + argumentList.length - 1))
     }
 
-    mainDisjunctiveNormalForm.map(item =>{
+    mainDisjunctiveNormalForm.map(item => {
       item[0] = `(${item[0]}`
-      item[item.length-1] = `${item[item.length-1]})∨`
+      item[item.length - 1] = `${item[item.length-1]})∨`
     })
-    MainDisjunctiveNormalForm = mainDisjunctiveNormalForm.join('').replace(/,/g,'∧')
-    MainDisjunctiveNormalForm = MainDisjunctiveNormalForm.substring(0,MainDisjunctiveNormalForm.length - 1)
-    console.log(MainDisjunctiveNormalForm)
+    MainDisjunctiveNormalForm = mainDisjunctiveNormalForm.join('').replace(/,/g, '∧')
+    MainDisjunctiveNormalForm = MainDisjunctiveNormalForm.substring(0, MainDisjunctiveNormalForm.length - 1)
+
+    $('#MainDisjunctiveNormalForm').text(`${MainDisjunctiveNormalForm}`) 
+
   }
 
-  function principalConjunctiveNormalForm(){
+  function principalConjunctiveNormalForm() {
     let principalConjunctiveNormalFormList = [],
-        principalConjunctiveNormalForm = [];
+      principalConjunctiveNormalForm = [];
 
     $('.result').each((index, cur) => {
-      if(cur.innerText == 'false'){
-        for(let i = 0;i< resultList[index].length; i++){
-          resultList[index][i] == 'F'? 
-          principalConjunctiveNormalFormList.push(argumentList[i])
-          :
-          principalConjunctiveNormalFormList.push(`┐${argumentList[i]}`)
+      if (cur.innerText == 'false') {
+        for (let i = 0; i < resultList[index].length; i++) {
+          resultList[index][i] == 'F' ?
+            principalConjunctiveNormalFormList.push(argumentList[i]) :
+            principalConjunctiveNormalFormList.push(`┐${argumentList[i]}`)
         }
       }
     })
 
-    for(let i = 0;i< principalConjunctiveNormalFormList.length;i + argumentList.length - 1){
+    for (let i = 0; i < principalConjunctiveNormalFormList.length; i + argumentList.length - 1) {
       principalConjunctiveNormalForm.push(principalConjunctiveNormalFormList.splice(i, i + argumentList.length - 1))
     }
 
-    principalConjunctiveNormalForm.map(item =>{
+    principalConjunctiveNormalForm.map(item => {
       item[0] = `(${item[0]}`
-      item[item.length-1] = `${item[item.length-1]})∧`
+      item[item.length - 1] = `${item[item.length-1]})∧`
     })
-    PrincipalConjunctiveNormalForm = principalConjunctiveNormalForm.join('').replace(/,/g,'∨')
-    PrincipalConjunctiveNormalForm = PrincipalConjunctiveNormalForm.substring(0,PrincipalConjunctiveNormalForm.length - 1)
-    console.log(PrincipalConjunctiveNormalForm)
+    PrincipalConjunctiveNormalForm = principalConjunctiveNormalForm.join('').replace(/,/g, '∨')
+    PrincipalConjunctiveNormalForm = PrincipalConjunctiveNormalForm.substring(0, PrincipalConjunctiveNormalForm.length - 1)
+    $('#PrincipalConjunctiveNormalForm').text(`${PrincipalConjunctiveNormalForm}`)
   }
 
 })

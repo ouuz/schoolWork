@@ -12,10 +12,16 @@
 </head>
 
 <body>
+  <div class="Tips">
+    <p>Hi！我是这个离散实验的作者，请仔细阅读以下的使用指南：</p>
+    <p>点击命题变元球 & 运算符球 后，对其进行拖拽，按命题实际顺序拖拽至绿色区，点击屏幕正中箭头，得到结果！</p>
+    <p>理论上支持无数个命题变元，但目前受屏幕宽度和笔电本身限制，用本作者的电脑得到的极限是同时计算15个命题变元，不知道你的电脑又支持多少个变元呢？</p>
+    <p>使用愉快~</p>
+  </div>
   <canvas id="canvas"></canvas>
   <div class="container">
     <div class="goBtn">
-      <img src="./img/Go.png" id ="goBtn"alt="GO">
+      <img src="./img/Go.png" id="goBtn" alt="GO">
     </div>
     <div class="argument">
       <div class="argumentBalls">
@@ -49,14 +55,21 @@
       <div class="connectorSquare">∧</div>
       <button id="showBBtn">展开</button>
     </div>
-    <div class="truthTable">
-    </div>
   </div>
+  <div class="truthTableBox">
+    <img src="./img/goback.png" alt="" id="back">
+    <div class="truthTable"></div>
+    <p>主析取范式为：</p>
+    <p id="MainDisjunctiveNormalForm"></p>
+    <p>主合取范式为：</p>
+    <p id="PrincipalConjunctiveNormalForm"></p>
+  </div>
+
 </body>
 <script src="./js/jquery-3.4.1.min.js"></script>
 <script src="./js/jquery-ui.js"></script>
 <script src="./js/waves.js"></script>
-<script src="./js/index.js"></script>
+<script src="./js/UI.js"></script>
 <script src="./js/argument.js"></script>
 
 </html>
