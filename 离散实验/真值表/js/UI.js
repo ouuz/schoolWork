@@ -1,5 +1,4 @@
 $(function () {
-  if ($('.argumentBall').css('opacity') === 1) {
     $('.argumentBall').click(function () {
       let move = $(`
         <div  class="argumentBall"
@@ -14,9 +13,7 @@ $(function () {
       $('.argument').append(move)
       move.draggable();
     })
-  }
   
-  if ($('.connectorSquare').css('opacity') === 1){
     $('.connectorSquare').click(function () {
       let move = $(`
         <div  class="connectorSquare"
@@ -31,7 +28,6 @@ $(function () {
       $('.connectors').append(move)
       move.draggable();
     })
-  }
 
   $('#showABtn').click(function () {
     if ($(this).text() == '收起') {
