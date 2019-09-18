@@ -66,6 +66,6 @@ $(function () {
   })
 
   $(document).bind("selectstart",function(){return false;});
-  $(document).bind("contextmenu",function(){return false;});
+  
 
 });

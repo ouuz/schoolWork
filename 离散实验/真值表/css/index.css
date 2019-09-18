@@ -28,7 +28,7 @@
   outline: none;
   border: 1px solid #ddd;
   cursor: pointer;
-  margin: 3vh 0vw 0vh 2.7vw;
+  margin: 3vh 0vw 0vh 2vw;
 }
 
 #showBBtn {
@@ -139,7 +139,7 @@
 }
 
 .truthTable {
-  max-height: 60vh;
+  max-height: 50vh;
   margin-bottom: 2vh;
 }
 
@@ -149,19 +149,19 @@
 
 .truthTableBox p {
   word-break: break-all;
-  width: 99vw;
+  width: 80vw;
   margin: auto;
 }
 
 .truthTableBox {
   transition: all .5s ease-in-out;
-  text-align: center;
   line-height: 2;
-  max-height: 70vh;
+  max-height: 50vh;
 }
 
 .truthTableBox img {
   width: 50px;
+  text-align: center;
 }
 
 .delete {
@@ -172,14 +172,14 @@
 
 .Tips {
   width: 30vw;
-  height: 11vw;
+  height: 15vw;
   margin: auto;
   background: #20312d40;
   padding: 20px;
-  line-height: 2;
+  line-height: 1.5;
   color: white;
   position: absolute;
-  top: -25vh;
+  top: -35vh;
   left: 0;
   right: 0;
   margin: auto;
@@ -189,7 +189,7 @@
 }
 @keyframes shake{
   to{
-    top: -24vh
+    top: -34vh
   }
 }
 tr,

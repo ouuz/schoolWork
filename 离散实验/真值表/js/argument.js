@@ -1,20 +1,20 @@
 $('#goBtn').click(function () {
   let List = [],
-    originalArgument = [],
     argumentList = [],
     conditions = [],
     tfList = [],
     resultList = [],
     MainDisjunctiveNormalForm,
     PrincipalConjunctiveNormalForm,
+    a = [],
     finalArgument;
 
   getValue()
   argument()
   isError()
-  
+
   function isError() {
-    if ((finalArgument.indexOf('∧') || finalArgument.indexOf('→') || finalArgument.indexOf('<=>') || finalArgument.indexOf('∨')) !== -1) {
+    if ((!!finalArgument.indexOf('∧') || !!finalArgument.indexOf('→') || !!finalArgument.indexOf('⇔') || !!finalArgument.indexOf('∨'))) {
       truthTable()
       mainDisjunctiveNormalForm()
       principalConjunctiveNormalForm()
@@ -26,18 +26,18 @@ $('#goBtn').click(function () {
         <button id="close">好的好的，我马上乖乖写好（</button>
       </div>
       `)
-      $('.error').css('opacity','0')
-      setTimeout(()=>{
-        $('.error').css('opacity','1')
-      },300)
+      $('.error').css('opacity', '0')
+      setTimeout(() => {
+        $('.error').css('opacity', '1')
+      }, 300)
     }
 
     $('#close').click(function () {
-      $('.error').css('opacity','0')
-      setTimeout(()=>{
+      $('.error').css('opacity', '0')
+      setTimeout(() => {
         $('.error').remove()
-      },300)
-      
+      }, 300)
+
     })
   }
 
@@ -48,48 +48,41 @@ $('#goBtn').click(function () {
     }).map(item => {
       List.push(item.innerText)
     })
-    originalArgument = [...List]
-    finalArgument = originalArgument.join('')
+    finalArgument = List.join('')
   }
 
   function SingleCondition() {
-    let indexList = [];
-    originalArgument = [...List];
-    originalArgument.map((item, index) => {
-      item == '(' ? indexList.push(index) : ''
-      if (item == '→' && List[index - 1] == ')') {
-        List.splice(`${indexList[0]}`, 0, '┐')
-      } else if (item == '→' && List[index - 1] !== ')') {
-        index == 1 ?
-          List.splice(0, 0, '┐') :
-          List.splice(`${index-2}`, 0, '┐')
-      }
-    })
-    List = List.join('').replace(/→/g, '∨').split('')
+    typeof List == 'string' ?
+      List = List.split('→') :
+      List = List.join('').split('→')
+    List = `┐(${List[0]})∨(${List[1]})`.split('')
     andOrNot()
   }
 
   function andOrNot() {
-    List = List.join('').replace(/┐/g, '!').replace(/∧/g, '&&').replace(/∨/g, '||').replace(/→/g, '∨').replace(/<=>/g, '&&')
+    List = List.join('').replace(/┐/g, '!').replace(/∧/g, '&&').replace(/∨/g, '||').replace(/→/g, '∨')
   }
 
   function DoubleConditions() {
-    List = List.join('').split('(').join('').split(')').join('').replace('<=>', ',').split(',')
-    List = `((${List[0]})→(${List[1]}))→((${List[1]})→(${List[0]}))`.split('')
-    List.find(function (ele) {
-      return ele == '→'
-    }) ? SingleCondition() : ''
-    List = List.split('')
-    andOrNot()
+    List.join('').split('→').join(',').split(',').map(item => {
+      a.push(item)
+    })
+    a[0] = a[0].replace(/⇔/, '^').split('')
+    a[0].splice(0, 0, '!')
+    a[0] = a[0].join('')
+
+    List = [...a].join('→')
+
+    List.indexOf('→') ?
+      SingleCondition() :
+      andOrNot()
   }
 
   function argument() {
-    List.find(function (ele) {
-        return ele == '<=>'
-      }) ? DoubleConditions() :
-      List.find(function (ele) {
-        return ele == '→'
-      }) ? SingleCondition() :
+    List.join('').indexOf('⇔') >= 0 ?
+      DoubleConditions() :
+      List.join('').indexOf('→') >= 0 ?
+      SingleCondition() :
       andOrNot()
     List = List.split('')
   }
@@ -160,6 +153,7 @@ $('#goBtn').click(function () {
     $('.result').each((index, cur) => {
       cur.innerText = finalResult[index]
     })
+    // finalArgument = '((┐┐┐P∨Q)⇔(A∧B))→(R∨(┐B∧C))'
     $(".truthTable table").find("th:last-of-type")[0].innerText = finalArgument
   }
 
@@ -167,11 +161,11 @@ $('#goBtn').click(function () {
     conditionalCombination()
     createTruthTable()
     fillTruthTable()
-    $('.container').css('transform','translateY(100vh)')
-    $('.truthTableBox').css('transform','translateY(-98vh)')
+    $('.container').css('transform', 'translateY(100vh)')
+    $('.truthTableBox').css('transform', 'translateY(-98vh)')
 
-    if($('.truthTable').height() >'550')
-      $('.truthTable').css('overflowY','scroll').css('overflowX','hidden')
+    if ($('.truthTable').height() > '450')
+      $('.truthTable').css('overflowY', 'scroll').css('overflowX', 'hidden')
   }
 
   function mainDisjunctiveNormalForm() {
@@ -199,7 +193,7 @@ $('#goBtn').click(function () {
     MainDisjunctiveNormalForm = mainDisjunctiveNormalForm.join('').replace(/,/g, '∧')
     MainDisjunctiveNormalForm = MainDisjunctiveNormalForm.substring(0, MainDisjunctiveNormalForm.length - 1)
 
-    $('#MainDisjunctiveNormalForm').text(`${MainDisjunctiveNormalForm}`) 
+    $('#MainDisjunctiveNormalForm').text(`${MainDisjunctiveNormalForm}`)
 
   }
 
@@ -228,6 +222,7 @@ $('#goBtn').click(function () {
     PrincipalConjunctiveNormalForm = principalConjunctiveNormalForm.join('').replace(/,/g, '∨')
     PrincipalConjunctiveNormalForm = PrincipalConjunctiveNormalForm.substring(0, PrincipalConjunctiveNormalForm.length - 1)
     $('#PrincipalConjunctiveNormalForm').text(`${PrincipalConjunctiveNormalForm}`)
+
   }
 
 })
