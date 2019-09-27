@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+</head>
+<style>
+  body{
+    padding: 0;
+    margin: 0;
+  }
+
+.container{
+  width: 600px;
+  height: 500px;
+  margin: auto;
+  position: relative;
+  background: linear-gradient(45deg,#03A9F4,#faa856);
+  color: #fff;
+  overflow: hidden;
+}
+
+fieldset{
+  height: 80%;
+  border: 8px solid #fff;
+  border-radius: 8px;
+  width: 80%;
+  margin: 20px auto;
+}
+.middle{
+  line-height: 2;
+  font-size: 25px;
+}
+.middle button{
+  border: 1px solid #ddd;
+    background: #fdd2c452;
+    color: #ffff;
+    cursor: pointer;
+    width: 40%;
+    line-height: 3;
+    margin: 0 auto;
+    display: block;
+    margin-bottom: 5em;
+}
+.foot{
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  color: #ddd;
+}
+.bg{
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%,-50%);
+}
+.bg img{
+  width: 250px;
+  height: 250px;
+  opacity: 0.1;
+  z-index: -1;
+}
+legend{
+    font-size: 35px;
+    letter-spacing: 8px;
+    padding: 0 33px;
+}
+</style>
+<body>
+  <div class="container">
+    <div class="bg">
+        <img src="http://sacc.oss-cn-beijing.aliyuncs.com/logo_%E5%89%AF%E6%9C%AC.png" />
+      </div>
+    <fieldset>
+        <legend style="text-align: center"> S A C C </legend>
+        <div class="middle">
+            <p>Welcome to the SACC platform!</p>
+            <p>Please click the button below for email verification (valid within 3 minutes only)</p>
+            <button>Verify email address</button>
+            <p style="font-size: 16px">If this is not your action, please ignore this message.</p>
+        </div>
+        <div class="foot">@2019 SACC</div>
+    </fieldset>
+  </div>
+
+</body>
+
+</html>
