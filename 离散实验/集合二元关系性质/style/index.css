@@ -1,0 +1,15 @@
+*{
+  margin: 0;
+  padding: 0;
+}
+#list{
+  width: 50%;
+  margin: auto;
+  height: 50vh;
+  max-width: 80vw;
+  max-height: 80vh;
+}
+#list table{
+  width: 50%;
+  height: 50%;
+}
