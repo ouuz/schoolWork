@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,15 +8,26 @@
   <title>集合二元关系性质</title>
   <link rel="stylesheet" href="./style/index.css">
 </head>
+
 <body>
   <div class="container">
-    <input type="number" id="line" value="2">
-    <input type="number" id="col" value="2">
-    <button id="create">Go</button>
-    <div id="list"></div>
-    <button id="natureShow">show</button>
+    <div class="getLineCol">
+      <div class="getLineColInputBox">
+        <input type="number" id="line" step="1" min="1">
+        <input type="number" id="col" step="1" min="1">
+      </div>
+      <button id="create" class="hbtn hb-border-off2">Go</button>
+    </div>
+    <div id="list">
+      <div id="ShowBtn">
+        <button id="natureShow" class="hbtn hb-border-off2">show</button>
+      </div>
+    </div>
+    <div class="result"></div>
   </div>
 </body>
 <script src="./js/jquery-3.4.1.min.js"></script>
 <script src="./js/index.js"></script>
+<script src="./js/UI.js"></script>
+
 </html>
