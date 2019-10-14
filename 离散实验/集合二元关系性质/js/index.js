@@ -65,16 +65,17 @@ const natureShow = () => {
 
     $('.result').append(`
       <p>自反性：${reflexivity}</p>
-      <p>反自反性：${oppsiteSymmetry}</p>
+      <p>反自反性：${oppsiteReflexivity}</p>
       <p>对称性：${symmetry}</p>
-      <p>反对称性：${oppsiteReflexivity}</p>
+      <p>反对称性：${oppsiteSymmetry}</p>
       <p>传递性：${transitivity}</p>
     `)
   })
 
   function Reflexivity(arr) {
     let result = 'Yes';
-    for (let l = 0; l < line - 1; l++) {
+    for (let l = 0; l < line; l++) {
+      console.log(arr[l][l])
       if (arr[l][l].innerText == 0) {
         result = 'Not'
         break;
@@ -130,7 +131,7 @@ const natureShow = () => {
 
   function OppsiteReflexivity(arr) {
     let result = 'Yes';
-    for (let l = 0; l < line - 1; l++) {
+    for (let l = 0; l < line; l++) {
       if (arr[l][l].innerText == 1) {
         result = 'Not'
         break;
