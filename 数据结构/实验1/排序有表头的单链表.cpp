@@ -38,19 +38,10 @@ int main(){
 	printf("\n带有表头的单链表创建成功！现在的有表头的单链表为：");
 	Output(list);
 	
-	printf("qqqqq");
+	printf("\n排序过后的单链表为：\n");
 	Sort(&list);
 	Output(list);
-	printf("\n你要查找的是第几个元素？请输入它的下标：");
-	scanf("%d", &findIndex);
-	Find(list,findIndex, &findElement);
-	printf("\n查找成功！你查找的元素为：%d", findElement);
-	
-	printf("\n你要删除的是第几个元素？请输入它的下标：");
-	scanf("%d", &delIndex);
-	Delete(&list,delIndex);
-	printf("\n删除成功！现在的有表头的单链表为：");
-	Output(list);
+
 	
 	Destory(&list);
 	return SUCCESS;
@@ -118,23 +109,29 @@ int Destory(headerList *L){
 	}
 }
 
-void Sort(headerList *L){
-	node *p = L -> head -> link , *q = NULL;
-	
-	if(L -> head -> link == NULL || L -> head -> link -> link == NULL)
-	return ;
-	
-	while(q != L -> head -> link -> link) {
-		for(p = L -> head; p -> link -> link != q; p = p -> link)
-		{
-			if(p -> link -> element > p -> link -> link -> element)
-			{
-				p -> link = p -> link -> link;
-				p -> link -> link = p -> link -> link -> link;
-				p -> link -> link -> link = p -> link;
-			}
-		}
-		q = p -> link;
-	}
-
+void Sort(headerList *h){
+    node *s1,*s2,*s3,*s4,*p,*q;
+    for (p=h->head;p!=NULL && p->link!=NULL;p=p->link) { 
+        for (q=p->link;q!=NULL && q->link!=NULL;q=q->link) {
+            if (p->link->element > q->link->element) {
+                s1=p->link;
+                s2=p->link->link;
+                s3=q->link;
+                s4=q->link->link;
+ 
+                if (s2!=s3) {
+                    p->link=s3;
+                    s3->link=s2;
+                    q->link=s1;
+                    s1->link=s4;
+                }
+                else {                                    
+                    p->link=s3;
+                    s3->link=s1;
+                    q=s3;
+                    s1->link=s4;
+                }
+            }
+        }
+    }
 }

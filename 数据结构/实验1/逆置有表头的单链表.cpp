@@ -34,22 +34,15 @@ int main(){
 	}
 	printf("\n带有表头的单链表创建成功！现在的有表头的单链表为：");
 	Output(list);
-	printf("\n你要查找的是第几个元素？请输入它的下标：");
-	scanf("%d", &findIndex);
-	Find(list,findIndex, &findElement);
-	printf("\n查找成功！你查找的元素为：%d", findElement);
-	printf("\n你是否要将表逆置？是则输入1，否则输入0");
+
+	printf("\n你是否要将表逆置？是则输入1，否则输入0\n");
 	scanf("%d", &result);
 	if(result == 1){
 		Reverse(&list);
 		printf("\n逆置成功！现在的有表头的单链表为：");
 		Output(list);
 	}
-	printf("\n你要删除的是第几个元素？请输入它的下标：");
-	scanf("%d", &delIndex);
-	Delete(&list,delIndex);
-	printf("\n删除成功！现在的有表头的单链表为：");
-	Output(list);
+
 	Destory(&list);
 	return SUCCESS;
 }

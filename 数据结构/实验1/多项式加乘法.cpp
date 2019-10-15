@@ -1,215 +1,189 @@
-#include <stdio.h>
-#include <stdlib.h>
-typedef struct pNode{
-	int coef;
-	int exp;
-	struct pNode *link;
-}pNode;
+#include<stdio.h>
+#include<stdlib.h>
+
+typedef struct PNode{
+    int coef;             //系数
+    int exp;              //指数
+    struct PNode* link;
+}PNode;
 
 typedef struct{
-	struct pNode *head;
+    struct PNode *head;
 }polynominal;
 
-void create(polynominal *p);
-void Add(polynominal *px, polynominal *qx);
-int Multiply(polynominal px, polynominal qx, polynominal *temp); 
-void Output(polynominal p);
 
-int main(){
-	polynominal p, q, temp;
-	
-	printf("请依次输入第一个一元多项式内元素的系数和指数：");
-	create(&p);
-	printf("请依次输入第二个一元多项式内元素的系数和指数：");
-	create(&q);
-	
-	printf("\n现在第一个一元多项式为：");
-	Output(p);
-	printf("\n现在第二个一元多项式为：");
-	Output(q);
-	
-	Multiply(p, q, &temp);
-	printf("\n两个多项式相乘过后得到的结果为：");
-	Output(temp);
-	
-	Add(&p, &q);
-	printf("\n两个多项式相加过后得到的结果为：");
-	Output(q);
-	
-	return 0;
-}
 
-void create(polynominal *p){
-	pNode *pn, *q, *r;
-	p -> head = (pNode*) malloc(sizeof(pNode));
-	p -> head -> exp = -1;
-	p -> head -> link = NULL;
-	for(;;){
-		pn = (pNode*)malloc(sizeof(pNode));
-		printf("coef:");
-		scanf("%d", &pn -> coef);
-		printf("exp:");
-		scanf("%d", &pn -> exp);
-		if(pn -> exp < 0)
-		break;
-		q = p -> head;
-		r = p -> head -> link;
-		while(r && r -> exp > pn -> exp){
-			q = r;
-			r = r -> link;
-		}
-		pn -> link = r;
-		q -> link = pn; 
-	} 
-}
-
-void Add(polynominal *px, polynominal *qx)
-{
-    pNode *ph = px->head, *qh = qx->head, *p1, *q1, *pre;
-
-    pNode *tail;
-    tail = qx->head;
-    pNode *tailNode;
-    tailNode = (pNode *)malloc(sizeof(pNode));
-    tailNode->exp = -1;
-    tailNode->coef = 0;
-    tailNode->link = NULL;
-    while (tail->link)
-    {
-        tail = tail->link;
-    }
-    tail->link = tailNode;
-
-    p1 = ph->link;
-    q1 = qh->link;
-    pre = qh;
-    while (p1)
-    {
-        while (p1->exp < q1->exp)
-        {
-            pre = q1;
-            q1 = q1->link;
+void Create(polynominal *p){
+    PNode *pn,*pre,*q;
+    p->head = (PNode*)malloc(sizeof(PNode));
+    p->head->exp = -1;
+    p->head->link = p->head;                    
+    for(;;){
+        pn=(PNode*)malloc(sizeof(PNode));
+        printf("coef:\n");
+        scanf("%d",&pn->coef);
+        printf("exp:\n");
+        scanf("%d",&pn->exp);
+        if(pn->exp<0) break;
+        pre = p->head;
+        q = p->head->link;
+        while(q && q->exp > pn->exp){
+            pre = q;
+            q = q->link;
         }
-        if (p1->exp > q1->exp)
-        {
-            pNode *tmp;
-            tmp = (pNode *)malloc(sizeof(pNode));
-            tmp->coef = p1->coef;
-            tmp->exp = p1->exp;
-            tmp->link = q1;
-            pre->link = tmp;
-            pre = pre->link;
-            p1 = p1->link;
-        }
-        else if (p1->exp == q1->exp)
-        {
-            q1->coef = q1->coef + p1->coef;
-            if (q1->coef == 0)
-            {
-                pre->link = q1->link;
-                free(q1);
-                q1 = pre->link;
-            }
-            p1 = p1->link;
-        }
+        pn->link = q;
+        pre->link = pn;
     }
-    free(tail->link);
-    tail->link = NULL;
 }
-
-
-int Multiply(polynominal px, polynominal qx, polynominal *temp)
-{ //将结果返回到temp中
-    pNode *p1, *q1, *ph, *qh, *tmp, *tp, *tailNode;
-    tmp = (pNode *)malloc(sizeof(pNode));
-    tmp->coef = 0;
-    tmp->exp = -1;
-    tmp->link = NULL;
-    temp->head = tmp;
-    tailNode = (pNode *)malloc(sizeof(pNode));
-    //同Add函数一样，添加辅助结尾结点，功能类似后缀表达式末尾的#
-    tailNode->coef = 0;
-    tailNode->exp = -1;
-    tailNode->link = NULL;
-    tmp->link = tailNode;
-    ph = px.head;
-    qh = qx.head;
-    p1 = ph->link;
-    q1 = qh->link;
-    while (q1)
-    {
-        while (p1)
-        {
-            pNode *p; //当前项乘积
-            p = (pNode *)malloc(sizeof(pNode));
-            p->coef = p1->coef * q1->coef;
-            p->exp = p1->exp + q1->exp;
-            
-            
-            printf("!!!!!\n");
-            
-            pNode *ptr; //指针结点
-            pNode *pre;
-            ptr = temp->head->link;
-            pre = temp->head;
-            if (tmp->link == tailNode)
-            { //若链表中无项，则无需判断直接添加
-                tmp->link = p;
-                p->link = tailNode;
-            }
-            else
-            { //将乘积项按照各项指数大小存入链表
-                while (p->exp < ptr->exp)
-                {
-                    pre = ptr;
-                    ptr = ptr->link;
-                }
-                if (p->exp > ptr->exp)
-                {
-                    pre->link = p;
-                    p->link = ptr;
-                }
-                else if (p->exp == ptr->exp)
-                {
-                    ptr->coef = p->coef + ptr->coef;
-                    if (ptr->coef == 0)
-                    {
-                        pre->link = ptr->link;
-                        free(ptr);
-                    }
-                }
-            }
-            p1 = p1->link;
-        }
-        q1 = q1->link;
-    }
-    pNode *tail;
-    tail = temp->head;
-    while (tail->link)
-    {
-        tail = tail->link;
-    }
-    free(tail->link);
-    tail->link = NULL; //将辅助的tailNode删除，释放空间
-    return 1;
-}
-
-
-
 
 
 void Output(polynominal p){
-	pNode *q ;
-	q = p.head -> link;
-	while(q){
-		q -> coef >= 0?
-			printf("+%d",q -> coef)
-		:
-			printf("%d",q -> coef);
-		printf("*x^%d",q -> exp);
-		q = q -> link;
+    PNode *q;
+    int flag = 1;                                 
+    q = p.head->link;
+    if (!q){
+        return;
+    }
+    while(q != p.head){
+        if (!flag && (q->coef > 0)) printf("+");	
+        flag = 0;                                  
+        if(q->coef == 0){                          
+            return;
+        }
+        printf("%d",q->coef);                       
+        switch(q->exp){                            
+            case 0:break;                           
+            case 1:printf("X");break;             
+            default:printf("X^%d",q->exp);break;
+        }
+        q = q->link;
+    }
+}
+
+void Add(polynominal *px,polynominal *qx){
+    PNode *q,*q1 = qx->head,*p, *p1,*temp;    
+    p = px->head->link;                       
+    p1 = px->head;
+    q = q1->link;                            
+    while(p->exp >= 0){
+        while(p->exp < q->exp){              
+            q1 = q;
+            q = q->link;
+        }
+        if(p->exp == q->exp){                
+            q->coef = q->coef + p->coef;
+            if(q->coef == 0){                
+                q1->link = q->link;          
+                free(q);                    
+                q = q1->link;               
+                p = p->link;
+            } 
+            else{
+                q1 = q;                       
+                q = q->link;
+                p = p->link;                
+            }
+        }
+        else{                                 
+            temp = (PNode*)malloc(sizeof(PNode));     
+            temp->coef = p->coef;
+            temp->exp = p->exp;
+            temp->link = q1->link;
+            q1->link = temp;
+            q1 = q1->link;
+            p = p->link;
+        }
+   }
+}
+
+
+void Multiply(polynominal *px,polynominal *qx){
+    polynominal qx1,qx2;
+    PNode *q1,*q2,*q3,*q4,*pre,*q;
+    qx1.head = (PNode*)malloc(sizeof(PNode));       
+    qx1.head->exp = -1;
+    qx1.head->link = qx1.head;                      
+    q1 = px->head->link;                            
+    q2 = qx->head->link;                            
+    while(q2->exp != -1){                           
+        q3 = (PNode*)malloc(sizeof(PNode));         
+        q3->coef = q1->coef * q2->coef;
+        q3->exp = q1->exp + q2->exp;
+        if(qx1.head->link->exp == -1){            
+            q3->link = qx1.head->link;
+            qx1.head->link = q3;
+            pre = qx1.head->link;
+        }
+        else{
+            q3->link = qx1.head;
+            pre->link = q3;
+            pre = pre->link;
+        }
+        q2 = q2->link;
+    }
+    q1 = q1->link;                                 
+    while(q1->exp != -1){                         
+        q2 = q2->link;
+        qx2.head = (PNode*)malloc(sizeof(PNode)); 
+        qx2.head->exp = -1;
+        qx2.head->link = qx2.head;
+        while(q2->exp != -1){   	
+            q4 = (PNode*)malloc(sizeof(PNode));
+            q4->coef = q1->coef * q2->coef;
+            q4->exp = q1->exp + q2->exp;
+            if(qx2.head->link->exp == -1){
+                q4->link = qx2.head->link;
+                qx2.head->link = q4;
+                pre = qx2.head->link;
+            }
+            else{
+                q4->link = qx2.head;
+                pre->link = q4;
+                pre = pre->link;
+            }
+            q2 = q2->link;
+        }
+        Add(&qx2,&qx1);                            
+        q1 = q1->link;
+    }
+    Output(qx1);
+}
+
+void Destroy(polynominal *p){
+	PNode *pn;
+	while(p->head->link)
+	{
+		pn = p->head->link; 
+		free(p->head);
+		p->head = pn;
 	}
 }
 
 
 
+int main(){
+    polynominal p,q;
+    int x;
+    printf("请输入第一个多项式为：\n");
+    Create(&p);
+    printf("\n\n请输入第二个多项式为\n");
+    Create(&q);
+    
+	printf("\n现在第一个一元多项式为：");
+	Output(p);
+	printf("\n现在第二个一元多项式为：");
+	Output(q);
+	
+    printf("\n\n请选择你要进行的操作：（0为加法，1为乘法）\n");
+    scanf("%d",&x);
+    switch(x){
+        case 0:printf("Add:\n");
+        Add(&p,&q);
+        Output(q);
+        break;
+        case 1:printf("Multiply:\n");
+        Multiply(&p,&q);
+        default:break;
+    }
+    return 0;
+}
