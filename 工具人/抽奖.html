@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <style>
+    div,
+    html,
+    body {
+      margin: 0;
+      padding: 0;
+    }
+
+    .container {
+      height: 100vh;
+      background: #b9962ec2;
+      position: relative;
+    }
+
+    .content {
+      width: 20vw;
+      height: 20vh;
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      margin: auto;
+    }
+
+    .Btn {
+      outline: none;
+      line-height: 3;
+      padding: 0 2rem;
+      cursor: pointer;
+    }
+
+    .Name {
+      height: 50%;
+      text-align: center;
+      font-size: 25px;
+      color: #ffffff;
+    }
+
+    .Btn {
+      outline: none;
+      line-height: 3;
+      padding: 0 10rem;
+      background: rgba(255, 255, 255, 0.3);
+      border: none;
+      color: #ffffff;
+      font-size: 2rem;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+    <div class="content">
+      <div class="Name">张三</div>
+      <button class="Btn">开始</button>
+    </div>
+
+  </div>
+
+</body>
+<script>
+  let Name = document.querySelector('.Name');
+  let Btn = document.querySelector('.Btn')
+  let arr = ['张三','李四','王五']
+  let index = 0
+  let randomName = null
+  let getName = null
+  let getNameIndex = 0
+  Btn.addEventListener('click', function () {
+
+    if (Btn.innerHTML == '开始') {
+      randomName = setInterval(() => {
+        if (index < arr.length) {
+          Name.innerHTML = arr[index]
+          index++;
+        } else {
+          index = 0
+        }
+      }, 30)
+      Btn.innerHTML = '停止';
+    } else {
+      if (randomName) {
+        clearInterval(randomName)
+      }
+      Btn.innerHTML = '开始';
+      getName = Name.innerHTML;
+      arr.map((item,index) => {
+        if (item == getName ) {
+          getNameIndex = index;
+        }
+      })
+      arr.splice(getNameIndex,1)
+      console.log(arr)
+    }
+  })
+</script>
+
+</html>
