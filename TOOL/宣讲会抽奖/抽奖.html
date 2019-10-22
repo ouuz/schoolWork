@@ -1,0 +1,461 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>宣讲会抽奖</title>
+  <style>
+    div,
+    html,
+    body {
+      margin: 0;
+      padding: 0;
+    }
+
+    .container {
+      height: 100vh;
+      background: #000000;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .content {
+      width: 30vw;
+      height: 20vh;
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      margin: auto;
+    }
+
+
+    .Name {
+      height: 50%;
+      text-align: center;
+      font-size: 3rem;
+      color: #ffffff;
+      transition: all 1s ease-in-out;
+    }
+
+    .Btn {
+      outline: none;
+      line-height: 2;
+      margin-top: 20px;
+      cursor: pointer;
+      width: 100%;
+      background: rgba(255, 255, 255, 0.3);
+      border: 1px solid #ffffff;
+      color: #ffffff;
+      font-size: 2rem;
+      transition: border-top-color 0.1s linear 0.21s, border-right-color 0.1s linear 0.14s, border-bottom-color 0.1s linear 0.07s, border-left-color 0.1s linear 0s;
+      border-color: rgb(255, 255, 255);
+      transition-duration: 0.3s;
+    }
+
+    .Btn:hover {
+      box-shadow: 2px 2px 2px 2px #443a3add;
+      border-color: initial;
+      transition: border-top-color 0.1s linear 0s, border-right-color 0.1s linear 0.07s, border-bottom-color 0.1s linear 0.14s, border-left-color 0.1s linear 0.21s;
+      border-color: transparent;
+    }
+
+    .imgBox {
+      width: 5vw;
+    }
+
+    .imgBox img {
+      width: 100%;
+    }
+
+    .star {
+      width: 3px;
+      height: 3px;
+      border-radius: 50%;
+      position: absolute;
+      background-color: rgba(255, 255, 255, 0.8);
+      box-shadow: 0 0 40px 0 rgba(255, 255, 255, 0.8), 0 0 20px 0 #FFFFFF;
+      animation: glow 5s infinite;
+    }
+
+    .starMedium {
+      width: 6px;
+      height: 6px;
+    }
+
+    .starBig {
+      width: 9px;
+      height: 9px;
+      box-shadow: 0 0 40px 0 #ffffff, 0 0 20px 0 #FFFFFF, inset 0 0 4px #FFFFFF;
+    }
+
+    .meteor {
+      width: 6px;
+      height: 6px;
+      background-color: rgba(255, 255, 255, 0.6);
+      box-shadow: 0 0 40px 0 #EDCDA3, 0 0 20px 0 #FFFFFF, inset 0 0 8px rgba(255, 255, 255, 0.6);
+      top: 0;
+      left: 80%;
+      opacity: 0.3;
+      transform: rotate(-45deg) translate(0, -50px);
+      animation: meteor 6s infinite;
+    }
+
+    .meteor:after {
+      content: '';
+      width: 20vw;
+      height: 6px;
+      border-radius: 50%;
+      background-color: rgba(255, 255, 255, 0.1);
+      box-shadow: 0 0 20px rgba(237, 205, 163, 0.4);
+      position: absolute;
+      top: 0;
+      left: 0;
+    }
+
+    @keyframes scale {
+      50% {
+        transform: scale(2);
+      }
+
+      100% {
+        transform: scale(1);
+      }
+    }
+
+    @keyframes glow {
+      0% {
+        opacity: 0.9;
+      }
+
+      50% {
+        opacity: 0.2;
+      }
+
+      100% {
+        opacity: 0.9;
+      }
+    }
+
+    @keyframes meteor {
+      0% {
+        transform: rotate(-45deg) translateX(0);
+        opacity: 0.3;
+      }
+
+      10% {
+        opacity: 1;
+      }
+
+      20% {
+        transform: rotate(-45deg) translateX(-100vw);
+        opacity: 0;
+      }
+
+      100% {
+        transform: rotate(-45deg) translateX(-100vw);
+        opacity: 0;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+    <div class="imgBox">
+      <img src="https://sacc.oss-cn-beijing.aliyuncs.com/logo_%E5%89%AF%E6%9C%AC.png" alt="">
+    </div>
+    <div class="content">
+      <div class="Name">计软网安院科协</div>
+      <button class="Btn">开始</button>
+    </div>
+    <div class="starBox"></div>
+    <div class="star meteor"></div>
+
+  </div>
+
+</body>
+<script src="./jquery-3.4.1.min.js"></script>
+<script>
+  let Name = document.querySelector('.Name');
+  let Btn = document.querySelector('.Btn')
+  let arr1 = ['张小岩',
+    '罗子睿',
+    '陆婉婷',
+    '徐恬甜',
+    '黄林',
+    '周文轩',
+    '陈思阳',
+    '季楚阳',
+    '汪紫轩',
+    '刘淇',
+    '刘淇',
+    '王亦婷',
+    '赵海燕',
+    '徐磊磊',
+    '谷佳航',
+    '陈昱均',
+    '郑光耀',
+    '郑岚月',
+    '吴佳波',
+    '李月涵',
+    '顾维韬',
+    '陈越',
+    '周受殷',
+    '强筱赟',
+    '陈顺鑫',
+    '钟敏睿',
+    '胡海涛',
+    '赵海燕',
+    '强筱赟',
+    '王亦婷',
+    '唐月霞',
+    '王浩龙',
+    '陈彦冰',
+    '郑毅',
+    '陈志楷',
+    '李锐',
+    '冯张熠',
+    '陈默涵',
+    '王浩龙',
+    '刘洋',
+    '郑友恒',
+    '王文钦',
+    '赵昊煊',
+    '黄婧',
+    '雷尚远',
+    '仲晨宇',
+    '肖逸',
+    '杨涛',
+    '余锦标',
+    '方景明',
+    '胡欣然',
+    '秦徐胜',
+    '李想',
+    '沈焦睿',
+    '吕永康',
+    '杨潇',
+    '蔡敏洁',
+    '许梓豪',
+    '丁昀',
+    '张禹辰',
+    '何婕妤',
+    '金书航',
+    '汤慧敏',
+    '张冬阳',
+    '叶琳',
+    '董卓灵',
+    '王敬雅',
+    '刘竞伊',
+    '黄照林',
+    '晏晨',
+    '铁锴',
+    '强朝蓬',
+    '李禹辰',
+    '汤柯',
+    '张赛',
+    '杨风舟',
+    '何瑞',
+    '杜守都',
+    '赖永晋',
+    '涂江川',
+    '苏双',
+    '韦庆斌',
+    '辛元龙',
+    '刘正贤',
+    '陈知今',
+    '杨凯迪',
+    '周栋',
+    '李中天',
+    '吴健',
+    '钱佳雯',
+    '李凡馨',
+    '唐姚瑶',
+    '杨帅',
+    '温小钰',
+    '蒋朝辉',
+    '董奥',
+    '陈佳伟',
+    '黄远宁',
+    '林子涛',
+    '袁尊',
+    '胡佳林',
+    '严皓',
+    '陈卓尔',
+    '邹杰',
+    '杨喆',
+    '韩科爽',
+    '徐瑞航',
+    '张颖',
+    '张通源',
+    '郭为',
+    '詹建',
+    '王东来',
+    '嵇浩然',
+    '顾嘉敏',
+    '吴瀚鹏',
+    '葛婧',
+    '解紫怡',
+    '杨建辉',
+    '黄睿宇',
+    '彭显富',
+    '朱辰希',
+    '嵇浩然',
+    '王东来',
+    '张其成',
+    '夏清华',
+    '陆立群',
+    '胡啸宇',
+    '杨博元',
+    '蔡啟顺',
+    '陈海杰',
+    '田仁轩',
+    '白冬波',
+    '王德琨',
+    '詹沈龙',
+    '黄思乐',
+    '曹宇',
+    '陈海杰',
+    '周文涛',
+    '彭政',
+    '郑锦江',
+    '陈美琳',
+    '董奥',
+    '詹沈龙',
+    '章博文',
+    '陈宣衡',
+    '张佳',
+    '蒲靖康',
+    '查鹏',
+    '王锟',
+    '卞句',
+    '黄照林',
+    '唐姚瑶',
+    '葛洪龙',
+    '黄志伟',
+    '程梓涵',
+    '强朝蓬',
+    '张其成',
+    '金廷枢',
+    '杨棒',
+    '潘心严',
+    '桂阳',
+    '铁锴',
+    '宋卓航',
+    '曹宇臣',
+    '夏林栋',
+    '曹烈烽',
+    '梁恒',
+    '张其成',
+    '葛洪龙',
+    '谢敏菲',
+    '金廷枢',
+    '戴昊',
+    '相咸玉',
+    '彭政',
+    '杨建辉',
+    '郑宇轩',
+    '华佳琳',
+    '徐舒敏',
+    '仲星宇',
+    '胡璐',
+    '蒋伟业',
+    '魏宏晨',
+    '金菁',
+    '王亦恺',
+    '周昀恒',
+    '陈进',
+    '华佳琳',
+    '沈灵',
+    '魏瑶瑶',
+    '郑宇轩',
+    '徐颖',
+    '杨晓菲',
+    '王基源',
+    '陈泽昊',
+    '严杰',
+    '夏友鑫',
+    '茹兴奥',
+    '蒋伟业',
+    '周世超',
+    '包一鸣',
+    '徐杨',
+    '黄开一',
+    '王珩捷',
+    '阳锦华',
+    '夏子淳',
+    '顾晓天',
+    '李星宇',
+    '姜盈若',
+    '张梓淳',
+    '黄梓城',
+    '吕杨沁',
+    '茹兴奥',
+    '陈励勤',
+    '高梦',
+    '武航宇',
+    '梁潇楠',
+    '徐泽辰',
+    '张嘉',
+    '谢炳辉',
+    '关天宇',
+    '张嘉'
+  ]
+  let arr = [...new Set(arr1)]
+  console.log(arr)
+  let index = 0
+  let randomName = null
+  let getName = null
+  let getNameIndex = 0
+  Btn.addEventListener('click', function () {
+
+    if (Btn.innerHTML == '开始') {
+      randomName = setInterval(() => {
+        if (index < arr.length) {
+          Name.innerHTML = arr[index]
+          index++;
+        } else {
+          index = 0
+        }
+      }, 50)
+      Btn.innerHTML = '停止';
+      if ($('.Name').css('animation') != 'none 0s ease 0s 1 normal none running') {
+        $('.Name').css('animation', 'none 0s ease 0s 1 normal none running')
+      }
+    } else {
+      if (randomName) {
+        clearInterval(randomName)
+      }
+      Btn.innerHTML = '开始';
+      getName = Name.innerHTML;
+      arr.map((item, index) => {
+        if (item == getName) {
+          getNameIndex = index;
+        }
+      })
+      arr.splice(getNameIndex, 1)
+      console.log(arr)
+      $('.Name').css('animation', 'scale .5s 1 forwards')
+    }
+  })
+
+  function generateStars(n) {
+    for (let i = 0; i < n; i++) {
+      let className = i % 20 == 0 ? 'star starBig' : i % 9 == 0 ? 'star starMedium' : 'star';
+      let top = Math.round(Math.random() * window.innerHeight,
+          left = Math.round(Math.random() * window.innerWidth),
+          animationDuration = Math.round(Math.random() * 3000) + 3000),
+        animationDelay = Math.round(Math.random() * 3000)
+
+      $('.starBox').append($(
+        `<div class="${className}"style ="top:${top}px;left:${left}px;animation-duration:${animationDuration}ms;animation-delay:${animationDelay}ms"></div>`
+      ));
+    }
+  };
+  generateStars(150)
+</script>
+
+</html>
